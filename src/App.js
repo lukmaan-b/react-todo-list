@@ -13,15 +13,25 @@ function App() {
     setTodo("");
   };
   return (
-    <div className="App">
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={todo} onChange={handleChange} />
+    <div className="container">
+      <div className="todo-container">
+        <form onSubmit={handleSubmit}>
+          <input
+            id="todo-input"
+            type="text"
+            value={todo}
+            onChange={handleChange}
+            placeholder="Type Here..."
+          />
+        </form>
         <ul>
           {todos.map((todo, index) => (
-            <li key={index}>{todo}</li>
+            <li className="todo-list" key={index}>
+              {todo}
+            </li>
           ))}
         </ul>
-      </form>
+      </div>
     </div>
   );
 }
