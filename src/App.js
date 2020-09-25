@@ -9,8 +9,39 @@ function App() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    setTodos((prevState) => [...prevState, todo]);
+    setTodos((prevState) => [
+      ...prevState,
+      { id: prevState.length, content: todo },
+    ]);
     setTodo("");
+  };
+  const handleClick = ({ target }) => {
+    if (target.className === "todo-list") {
+      setTodos((prevState) => {
+        return prevState.filter(({ id }) => {
+          console.log(id, target.dataset.id);
+          return id != target.dataset.id;
+        });
+      });
+    }
+  };
+
+  const mapTodos = () => {
+    console.log();
+    return todos.length > 0 ? (
+      todos.map((todo) => (
+        <li data-id={todo.id} className="todo-list" key={todo.id}>
+          {todo.content}
+        </li>
+      ))
+    ) : (
+      <li className="todo-list">
+        Nothing here
+        <span role="img" aria-label="frog emoji">
+          🐸
+        </span>
+      </li>
+    );
   };
   return (
     <div className="container">
@@ -24,13 +55,7 @@ function App() {
             placeholder="Type Here..."
           />
         </form>
-        <ul>
-          {todos.map((todo, index) => (
-            <li className="todo-list" key={index}>
-              {todo}
-            </li>
-          ))}
-        </ul>
+        <ul onClick={handleClick}>{mapTodos()}</ul>
       </div>
     </div>
   );
